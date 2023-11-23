@@ -4,6 +4,8 @@ import datetime as dt
 
 LETTERS_PATHS = ["letter_1.txt", "letter_2.txt", "letter_3.txt"]
 SENDER_NAME = "Jakub"
+SENDER_EMAIL = "mail@gmail.com"
+SENDER_PASSWORD = "1234"
 
 
 def format_letter(celebrant_name):
