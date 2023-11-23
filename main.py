@@ -1,5 +1,4 @@
 ##################### Extra Hard Starting Project ######################
-
 # 1. Update the birthdays.csv
 
 # 2. Check if today matches a birthday in the birthdays.csv
