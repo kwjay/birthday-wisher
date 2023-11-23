@@ -4,9 +4,11 @@ import datetime as dt
 import smtplib
 
 LETTERS_PATHS = ["letter_1.txt", "letter_2.txt", "letter_3.txt"]
-SENDER_NAME = "Jakub"
-SENDER_EMAIL = "mail@gmail.com"
-SENDER_PASSWORD = "1234"
+SENDER_NAME = "sender name"
+SENDER_EMAIL = "sender@gmail.com"
+SENDER_PASSWORD = "password"
+PROVIDER_SMTP = "smtp.gmail.com"
+PROVIDER_PORT = 587
 
 
 def format_letter(celebrant_name):
@@ -19,7 +21,15 @@ def format_letter(celebrant_name):
 
 
 def send_birthday_wishes(celebrant):
-    print(format_letter(celebrant_name=celebrant["name"]))
+    with smtplib.SMTP(PROVIDER_SMTP, PROVIDER_PORT) as connection:
+        connection.starttls()
+        connection.login(user=SENDER_EMAIL, password=SENDER_PASSWORD)
+        celebrant_name = celebrant["name"]
+        connection.sendmail(
+            from_addr=SENDER_EMAIL,
+            to_addrs=celebrant["email"],
+            msg=f"Subject:HAPPY BIRTHDAY {celebrant_name}\n\n{format_letter(celebrant_name)}"
+        )
 
 
 data_file = pandas.read_csv("birthdays.csv")
@@ -29,9 +39,3 @@ today = dt.datetime.now()
 for person in data:
     if person["month"] == today.month and person["day"] == today.day:
         send_birthday_wishes(celebrant=person)
-
-# 4. Send the letter generated in step 3 to that person's email address.
-
-
-
-
